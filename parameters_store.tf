@@ -21,3 +21,39 @@ resource "aws_ssm_parameter" "private_1c" {
   type  = "String"
   value = aws_subnet.privatesubnet-1c
 }
+
+resource "aws_ssm_parameter" "public_1a" {
+  name  = format("%s/vpc/subnet_public_1a", var.project_name)
+  type  = "String"
+  value = aws_subnet.publicsubnet-1a
+}
+
+resource "aws_ssm_parameter" "public_1b" {
+  name  = format("%s/vpc/subnet_public_1b", var.project_name)
+  type  = "String"
+  value = aws_subnet.publicsubnet-1b
+}
+
+resource "aws_ssm_parameter" "public_1c" {
+  name  = format("%s/vpc/subnet_public_1c", var.project_name)
+  type  = "String"
+  value = aws_subnet.publicsubnet-1c
+}
+
+resource "aws_ssm_parameter" "database_1a" {
+  name  = format("%s/vpc/subnet_database_1a", var.project_name)
+  type  = "String"
+  value = aws_subnet.databasesubnet-1a
+}
+
+resource "aws_ssm_parameter" "database_1b" {
+  name  = format("%s/vpc/subnet_database_1b", var.project_name)
+  type  = "String"
+  value = aws_subnet.databasesubnet-1b
+}
+
+resource "aws_ssm_parameter" "database_1c" {
+  name  = format("%s/vpc/subnet_database_1c", var.project_name)
+  type  = "String"
+  value = aws_subnet.databasesubnet-1c
+}

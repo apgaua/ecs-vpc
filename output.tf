@@ -1,15 +1,39 @@
 output "ssm_vpc_id" {
-    value = aws_ssm_parameter.vpc.id
+  value = aws_ssm_parameter.vpc.id
 }
 
 output "ssm_subnet_private_1a" {
-    value = aws_ssm_parameter.subnet_private_1a.id
+  value = aws_ssm_parameter.subnet_private_1a.id
 }
 
 output "ssm_subnet_private_1b" {
-    value = aws_ssm_parameter.subnet_private_1b
+  value = aws_ssm_parameter.subnet_private_1b
 }
 
 output "ssm_subnet_private_1c" {
-    value = aws_ssm_parameter.ssm_subnet_private_1c
+  value = aws_ssm_parameter.ssm_subnet_private_1c
+}
+
+output "ssm_subnet_public_1a" {
+  value = aws_ssm_parameter.subnet_public_1a.id
+}
+
+output "ssm_subnet_public_1b" {
+  value = aws_ssm_parameter.subnet_public_1b
+}
+
+output "ssm_subnet_public_1c" {
+  value = aws_ssm_parameter.ssm_subnet_public_1c
+}
+
+output "ssm_subnet_database_1a" {
+  value = aws_ssm_parameter.subnet_database_1a.id
+}
+
+output "ssm_subnet_database_1b" {
+  value = aws_ssm_parameter.subnet_database_1b
+}
+
+output "ssm_subnet_database_1c" {
+  value = aws_ssm_parameter.ssm_subnet_database_1c
 }
