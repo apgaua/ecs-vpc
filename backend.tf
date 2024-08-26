@@ -1,7 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "value"
-    key    = "value"
-
+    bucket = var.bucket
+    key    = var.key
   }
 }
