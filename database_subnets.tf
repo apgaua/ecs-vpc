@@ -1,26 +1,10 @@
-resource "aws_subnet" "databasesubnet-1a" {
+resource "aws_subnet" "dbsubnets" {
+  for_each          = var.dbsubnets
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.51.0/24"
-  availability_zone = format("%sa", var.region)
-  tags = {
-    Name = format("%s-database-subnet-1a", var.project_name)
-  }
-}
+  cidr_block        = each.value.cidr_block
+  availability_zone = each.value.availability_zone
 
-resource "aws_subnet" "databasesubnet-1b" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.52.0/24"
-  availability_zone = format("%sb", var.region)
   tags = {
-    Name = format("%s-private-subnet-1b", var.project_name)
-  }
-}
-
-resource "aws_subnet" "databasesubnet-1c" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.53.0/24"
-  availability_zone = format("%sc", var.region)
-  tags = {
-    Name = format("%s-private-subnet-1c", var.project_name)
+    Name = "${each.key}"
   }
 }

@@ -1,80 +1,37 @@
-resource "aws_subnet" "privatesubnet-1a" {
+resource "aws_subnet" "privatesubnets" {
+  for_each          = var.privatesubnets
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.0.0/20"
-  availability_zone = format("%sa", var.region)
+  cidr_block        = each.value.cidr_block
+  availability_zone = each.value.availability_zone
+
   tags = {
-    Name = format("%s-private-subnet-1a", var.project_name)
+    Name = "${each.key}"
   }
 }
 
-resource "aws_subnet" "privatesubnet-1b" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.16.0/20"
-  availability_zone = format("%sb", var.region)
+#Route Table
+resource "aws_route_table" "private_internet_access" {
+  for_each = toset(var.availability_zones)
+  vpc_id   = aws_vpc.main.id
   tags = {
-    Name = format("%s-private-subnet-1b", var.project_name)
+    Name = format("%s-private-%s", var.project_name, each.key)
   }
 }
 
-resource "aws_subnet" "privatesubnet-1c" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.32.0/20"
-  availability_zone = format("%sc", var.region)
-  tags = {
-    Name = format("%s-private-subnet-1c", var.project_name)
-  }
-}
-
-resource "aws_route_table" "private_internet_access_1a" {
-  vpc_id = aws_vpc.main.id
-  tags = {
-    Name = format("%s-private", var.project_name)
-  }
-}
-
-resource "aws_route_table" "private_internet_access_1b" {
-  vpc_id = aws_vpc.main.id
-  tags = {
-    Name = format("%s-private-1b", var.project_name)
-  }
-}
-
-resource "aws_route_table" "private_internet_access_1c" {
-  vpc_id = aws_vpc.main.id
-  tags = {
-    Name = format("%s-private-1c", var.project_name)
-  }
-}
-
-resource "aws_route" "private_access_1a" {
-  route_table_id         = aws_route_table.private_internet_access_1a.id
+#Route
+resource "aws_route" "private_access" {
+  for_each               = aws_route_table.private_internet_access
+  route_table_id         = each.value.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_nat_gateway.nat_1a.id
+  gateway_id             = aws_nat_gateway.natgw[each.key].id
 }
 
-resource "aws_route" "private_access_1b" {
-  route_table_id         = aws_route_table.private_internet_access_1b.id
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_nat_gateway.nat_1b.id
-}
-
-resource "aws_route" "private_access_1c" {
-  route_table_id         = aws_route_table.private_internet_access_1c.id
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_nat_gateway.nat_1c.id
-}
-
-resource "aws_route_table_association" "private_1a" {
-  subnet_id      = aws_subnet.privatesubnet-1a.id
-  route_table_id = aws_route_table.private_internet_access_1a.id
-}
-
-resource "aws_route_table_association" "private_1b" {
-  subnet_id      = aws_subnet.privatesubnet-1b.id
-  route_table_id = aws_route_table.private_internet_access_1b.id
-}
-
-resource "aws_route_table_association" "private_1c" {
-  subnet_id      = aws_subnet.privatesubnet-1c.id
-  route_table_id = aws_route_table.private_internet_access_1c.id
+#Route table association
+resource "aws_route_table_association" "private" {
+  for_each = aws_route_table.private_internet_access
+  subnet_id = lookup(
+    { for subnet in aws_subnet.privatesubnets : subnet.availability_zone => subnet.id }, each.key
+  )
+  route_table_id = each.value.id
+  depends_on     = [aws_subnet.privatesubnets]
 }
