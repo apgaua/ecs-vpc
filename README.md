@@ -1,5 +1,5 @@
 # arquiteturacontainers
-<!-- BEGIN_TF_DOCS -->
+
 ## Requirements
 
 Terraform
@@ -25,6 +25,7 @@ inframap generate ./ --raw | dot -Tpng > diagrama.png
 ## Estrutura
 ![Estrutura terraform](diagrama.png)
 
+<!-- BEGIN_TF_DOCS -->
 ## Providers
 
 | Name | Version |
