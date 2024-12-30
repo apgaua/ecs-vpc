@@ -1,8 +1,5 @@
 name: Docs
-on:
-  push:
-    branches-ignore:
-      - main
+on: pull_request
 
 jobs:
   diag:
@@ -14,3 +11,5 @@ jobs:
 
       - name: Create & commit diagram with PR
         uses: erzz/inframap-action@v1
+        with:
+          pr-comment: true
