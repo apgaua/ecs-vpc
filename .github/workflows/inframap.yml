@@ -12,4 +12,6 @@ jobs:
       - name: Create & commit diagram with PR
         uses: erzz/inframap-action@v1
         with:
+          input: .
+          output-filename: diagram.png
           pr-comment: true
