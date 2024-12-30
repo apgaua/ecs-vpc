@@ -26,6 +26,10 @@ inframap generate ./ --raw | dot -Tpng > diagrama.png
 ![Estrutura terraform](diagrama.png)
 
 <!-- BEGIN_TF_DOCS -->
+## Requirements
+
+No requirements.
+
 ## Providers
 
 | Name | Version |
@@ -62,11 +66,11 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | n/a | `list(string)` | <pre>[<br>  "us-east-1a",<br>  "us-east-1b",<br>  "us-east-1c"<br>]</pre> | no |
-| <a name="input_dbsubnets"></a> [dbsubnets](#input\_dbsubnets) | Database | <pre>map(object({<br>    cidr_block        = string<br>    availability_zone = string<br>  }))</pre> | n/a | yes |
-| <a name="input_privatesubnets"></a> [privatesubnets](#input\_privatesubnets) | Private | <pre>map(object({<br>    cidr_block        = string<br>    availability_zone = string<br>  }))</pre> | n/a | yes |
+| <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | n/a | `list(string)` | <pre>[<br/>  "us-east-1a",<br/>  "us-east-1b",<br/>  "us-east-1c"<br/>]</pre> | no |
+| <a name="input_dbsubnets"></a> [dbsubnets](#input\_dbsubnets) | Database | <pre>map(object({<br/>    cidr_block        = string<br/>    availability_zone = string<br/>  }))</pre> | n/a | yes |
+| <a name="input_privatesubnets"></a> [privatesubnets](#input\_privatesubnets) | Private | <pre>map(object({<br/>    cidr_block        = string<br/>    availability_zone = string<br/>  }))</pre> | n/a | yes |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | n/a | `any` | n/a | yes |
-| <a name="input_publicsubnets"></a> [publicsubnets](#input\_publicsubnets) | Public | <pre>map(object({<br>    cidr_block        = string<br>    availability_zone = string<br>  }))</pre> | n/a | yes |
+| <a name="input_publicsubnets"></a> [publicsubnets](#input\_publicsubnets) | Public | <pre>map(object({<br/>    cidr_block        = string<br/>    availability_zone = string<br/>  }))</pre> | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | n/a | `any` | n/a | yes |
 
 ## Outputs
