@@ -17,8 +17,12 @@ jobs:
           terraform_version: 1.0.0
 
       - name: Terraform Init
-        run: -backend-config=environment/dev/backend.tfvars
+        run: terraform init -backend-config=environment/dev/backend.tfvars
 
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+      
       - name: Terraform Plan
         run: terraform plan -out=tfplan.binary -var-file=environment/dev/terraform.tfvars
 
