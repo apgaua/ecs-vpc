@@ -16,6 +16,9 @@ jobs:
         with:
           terraform_version: 1.0.0
 
+      - name: Terraform fmt
+        run: terraform fmt --recursive
+
       - name: Terraform Init
         run: terraform init -backend-config=environment/dev/backend.tfvars
 
