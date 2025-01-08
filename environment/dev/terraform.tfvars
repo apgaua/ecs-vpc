@@ -37,6 +37,7 @@ privatesubnets = [
     availability_zone = "us-east-1c"
   }
 ]
+
 databasesubnets = [
   {
     name              = "ecs-databases_subnet-1a"
@@ -52,5 +53,22 @@ databasesubnets = [
     name              = "ecs-databases_subnet-1c"
     cidr              = "10.0.53.0/24"
     availability_zone = "us-east-1c"
+  }
+]
+
+database_nacl_rules = [
+  {
+    rule_start_number = 10
+    rule_action       = "allow"
+    protocol          = "tcp"
+    from_port         = 3306
+    to_port           = 3306
+  },
+  {
+    rule_start_number = 20
+    rule_action       = "allow"
+    protocol          = "tcp"
+    from_port         = 6379
+    to_port           = 6379
   }
 ]
