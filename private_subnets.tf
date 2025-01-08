@@ -1,35 +1,37 @@
-# resource "aws_subnet" "privatesubnets" {
-#   count             = length(var.privatesubnets)
-#   vpc_id            = aws_vpc.main.id
-#   cidr_block        = var.privatesubnets[count.index].cidr
-#   availability_zone = var.privatesubnets[count.index].availability_zone
+resource "aws_subnet" "privatesubnets" {
+  for_each          = var.privatesubnets
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = each.value.cidr_block
+  availability_zone = each.value.availability_zone
 
-#   tags = {
-#     Name = var.privatesubnets[count.index].name
-#   }
-# }
+  tags = {
+    Name = "${each.key}"
+  }
+}
 
-# #Route Table
-# resource "aws_route_table" "private_internet_access" {
-#   count  = length(var.privatesubnets)
-#   vpc_id = aws_vpc.main.id
-#   tags = {
-#     Name = format("%s-private-%s", var.project_name, count.index)
-#   }
-# }
+#Route Table
+resource "aws_route_table" "private_internet_access" {
+  for_each = toset(var.availability_zones)
+  vpc_id   = aws_vpc.main.id
+  tags = {
+    Name = format("%s-private-%s", var.project_name, each.key)
+  }
+}
 
-# #Route
-# resource "aws_route" "private_access" {
-#   count                  = length(var.privatesubnets)
-#   route_table_id         = aws_route_table.private_internet_access[count.index].id
-#   destination_cidr_block = "0.0.0.0/0"
-#   gateway_id             = aws_nat_gateway.natgw[count.index].id
-# }
+#Route
+resource "aws_route" "private_access" {
+  for_each               = aws_route_table.private_internet_access
+  route_table_id         = each.value.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_nat_gateway.natgw[each.key].id
+}
 
-# #Route table association
-# resource "aws_route_table_association" "private" {
-#   count          = length(var.privatesubnets)
-#   subnet_id      = aws_subnet.privatesubnets[count.index].id
-#   route_table_id = aws_route_table.private_internet_access[count.index].id
-#   depends_on     = [aws_subnet.privatesubnets]
-# }
+#Route table association
+resource "aws_route_table_association" "private" {
+  for_each = aws_route_table.private_internet_access
+  subnet_id = lookup(
+    { for subnet in aws_subnet.privatesubnets : subnet.availability_zone => subnet.id }, each.key
+  )
+  route_table_id = each.value.id
+  depends_on     = [aws_subnet.privatesubnets]
+}
