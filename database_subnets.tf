@@ -1,10 +1,10 @@
-# resource "aws_subnet" "dbsubnets" {
-#   count             = length(var.databasesubnets)
-#   vpc_id            = aws_vpc.main.id
-#   cidr_block        = var.databasesubnets[count.index].cidr
-#   availability_zone = var.databasesubnets[count.index].availability_zone
+resource "aws_subnet" "dbsubnets" {
+  for_each          = var.dbsubnets
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = each.value.cidr_block
+  availability_zone = each.value.availability_zone
 
-#   tags = {
-#     Name = var.databasesubnets[count.index].name
-#   }
-# }
+  tags = {
+    Name = "${each.key}"
+  }
+}
