@@ -3,9 +3,10 @@ on:
   pull_request
 
 jobs:
-  docs:
+  generate-docs: #Name of the job
     runs-on: ubuntu-latest
     steps:
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
