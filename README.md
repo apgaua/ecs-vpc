@@ -82,3 +82,4 @@ No modules.
 | <a name="output_ssm_subnet_public"></a> [ssm\_subnet\_public](#output\_ssm\_subnet\_public) | n/a |
 | <a name="output_ssm_vpc_id"></a> [ssm\_vpc\_id](#output\_ssm\_vpc\_id) | n/a |
 <!-- END_TF_DOCS -->
+
