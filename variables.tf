@@ -1,5 +1,6 @@
 variable "project_name" {}
 variable "region" {}
+variable "vpc_cidr" {}
 
 variable "availability_zones" {
   type    = list(string)
@@ -8,24 +9,27 @@ variable "availability_zones" {
 
 #Public
 variable "publicsubnets" {
-  type = map(object({
-    cidr_block        = string
+  type = list(object({
+    name              = string
+    cidr              = string
     availability_zone = string
   }))
 }
 
 # Private
 variable "privatesubnets" {
-  type = map(object({
-    cidr_block        = string
+  type = list(object({
+    name              = string
+    cidr              = string
     availability_zone = string
   }))
 }
 
 # Database
-variable "dbsubnets" {
-  type = map(object({
-    cidr_block        = string
+variable "databasesubnets" {
+  type = list(object({
+    name              = string
+    cidr              = string
     availability_zone = string
   }))
 }
