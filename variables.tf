@@ -1,12 +1,24 @@
 variable "project_name" {
   type = string
 }
+
+variable "default_tags" {
+  type = map(string)
+  default = {
+    contato = ""
+    dia = ""
+    repo = ""
+  }
+}
+
 variable "region" {
   type = string
 }
+
 variable "vpc_cidr" {
   type = string
 }
+
 variable "vpc_additional_cidrs" {
   type        = list(string)
   description = "Additional VPC CIDRs"
@@ -18,11 +30,7 @@ variable "vpc_additional_cidrs" {
 ##################################################
 
 variable "publicsubnets" {
-  type = list(object({
-    name              = string
-    cidr              = string
-    availability_zone = string
-  }))
+  type = list(string)
   description = "Public subnet values"
 }
 
@@ -31,11 +39,7 @@ variable "publicsubnets" {
 ##################################################
 
 variable "privatesubnets" {
-  type = list(object({
-    name              = string
-    cidr              = string
-    availability_zone = string
-  }))
+  type = list(string)
   description = "Private subnet values"
 }
 
@@ -44,11 +48,7 @@ variable "privatesubnets" {
 ##################################################
 
 variable "databasesubnets" {
-  type = list(object({
-    name              = string
-    cidr              = string
-    availability_zone = string
-  }))
+  type = list(string)
   description = "Database subnet values"
 }
 
