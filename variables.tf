@@ -6,8 +6,8 @@ variable "default_tags" {
   type = map(string)
   default = {
     contato = ""
-    dia = ""
-    repo = ""
+    dia     = ""
+    repo    = ""
   }
 }
 
@@ -30,7 +30,7 @@ variable "vpc_additional_cidrs" {
 ##################################################
 
 variable "publicsubnets" {
-  type = list(string)
+  type        = list(string)
   description = "Public subnet values"
 }
 
@@ -39,7 +39,7 @@ variable "publicsubnets" {
 ##################################################
 
 variable "privatesubnets" {
-  type = list(string)
+  type        = list(string)
   description = "Private subnet values"
 }
 
@@ -48,7 +48,7 @@ variable "privatesubnets" {
 ##################################################
 
 variable "databasesubnets" {
-  type = list(string)
+  type        = list(string)
   description = "Database subnet values"
 }
 
